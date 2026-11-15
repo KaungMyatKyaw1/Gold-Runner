@@ -112,7 +112,7 @@ html,body{height:100%;overscroll-behavior:none}body{background:#060c19}.wrap{hei
 @media(max-height:760px){.welcome-actions>button,.welcome-actions>.music-select{min-height:38px!important}}
 
 .play-pause{display:none}.wrap.playing .play-pause{display:block;position:absolute;top:12px;right:12px;z-index:11;padding:10px 14px;background:#14273bed}@media(max-width:740px){.wrap.playing .play-pause{top:auto;bottom:12px;left:12px;right:auto}}
-.pause-overlay{position:absolute;inset:0;z-index:10;display:grid;place-items:center;background:#050c1bc9;text-align:center;line-height:1.5;padding:16px}.pause-overlay[hidden]{display:none!important}.pause-overlay strong{font-size:clamp(24px,5vw,48px);color:#6ce5dd;letter-spacing:.12em}.pause-overlay p{font-size:14px;color:#d0dcf3}.pause-overlay button{font-size:14px}
+.pause-overlay{position:absolute;inset:0;z-index:10;display:grid;place-items:center;background:#050c1bc9;text-align:center;line-height:1.5;padding:16px}.pause-overlay[hidden]{display:none!important}.pause-overlay strong{font-size:clamp(24px,5vw,48px);color:#6ce5dd;letter-spacing:.12em}.pause-overlay p{font-size:14px;color:#d0dcf3}.pause-overlay button{font-size:14px}.pause-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
 /* OCR scanner: photograph, corner calibration, automatically recognized playable level. */
 #photoTrace .photo-trace-card{max-height:96vh;overflow:auto}
 #ocrStatus{padding:9px 12px;line-height:1.45;background:#132b41;border:1px solid #327c86;border-radius:7px;color:#b8ffea;font:600 13px/1.5 monospace;margin:8px 0}
@@ -455,7 +455,7 @@ ONNX MODEL ZOO LICENSE
 <div class="toolbar"><button id="play" class="primary">▶ PLAY LEVEL</button><button id="edit">✎ LEVEL EDITOR</button><button id="reset">↻ RESTART</button><button id="example">★ SAMPLE LEVEL</button><button id="blank">▦ BLANK LEVEL</button></div>
 <button id="pause" type="button" class="play-pause" title="Pause or resume (Space)" aria-pressed="false" disabled>Ⅱ PAUSE</button>
 <div class="stats"><span id="stageLabel">LEVEL 01 / 10</span><span id="modeLabel">MODE: EDITOR</span><span id="shards">SHARDS: 0 / 0</span><span id="clock">TIME: 00:00</span><span id="lifeCount">Lives: 3</span></div>
-<div class="stage" id="stage"><div class="game-frame" id="gameFrame"><canvas id="game" width="1080" height="600" aria-label="Game and editable level board"></canvas><div id="pauseOverlay" class="pause-overlay" role="status" hidden><div><strong>PAUSED</strong><p>Press Space to continue</p><button id="continuePlay" type="button" class="primary">▶ RESUME GAME</button></div></div></div></div><div class="message" id="message" role="status">Choose a brush below, click to paint, then press Play Level.</div>
+<div class="stage" id="stage"><div class="game-frame" id="gameFrame"><canvas id="game" width="1080" height="600" aria-label="Game and editable level board"></canvas><div id="pauseOverlay" class="pause-overlay" role="status" hidden><div><strong>PAUSED</strong><p>Press Space to continue</p><div class="pause-actions"><button id="continuePlay" type="button" class="primary">▶ RESUME GAME</button><button id="pauseMenu" type="button">☰ MAIN MENU</button></div></div></div></div></div><div class="message" id="message" role="status">Choose a brush below, click to paint, then press Play Level.</div>
 <div class="mobile"><div class="controls"><button data-hold="q" class="wide">DIG ↙</button><button data-hold="ArrowLeft">◀</button><button data-hold="ArrowUp">▲</button><button data-hold="ArrowRight">▶</button><button data-hold="e" class="wide">DIG ↘</button><span></span><span></span><button data-hold="ArrowDown">▼</button></div></div>
 <div class="lower"><section class="panel"><h2>CREATE YOUR OWN LEVEL — 36 × 20</h2>
 <div id="palette" class="palette"></div>
@@ -1888,7 +1888,7 @@ CAMPAIGN_SPECS.forEach((spec,i)=>{
   el('stagePickerGrid').appendChild(b);
 });
 el('resume').onclick=()=>{hideWelcome();enterFullscreen()};
-el('pause').onclick=togglePause;el('continuePlay').onclick=togglePause;
+el('pause').onclick=togglePause;el('continuePlay').onclick=togglePause;el('pauseMenu').onclick=showWelcome;
 el('home').onclick=showWelcome;el('fullscreen').onclick=toggleFullscreen;
 window.addEventListener('resize',fitBoard);document.addEventListener('fullscreenchange',fitBoard);
 el('play').onclick=playOrReset;el('edit').onclick=switchEdit;el('reset').onclick=()=>{if(mode==='play')start();else{level=sample();save();notify('Sample level restored.')}};el('example').onclick=()=>{setLevel(sample());notify('Sample level loaded. Press Play Level!')};el('blank').onclick=()=>{setLevel(wallLevel());notify('Blank level loaded. Draw a spawn and shards; a victory ladder is added automatically!')};el('letterGrid').onclick=letterGrid;el('guide').onclick=guide;el('cutouts').onclick=cutouts;el('export').onclick=()=>download(exportCanvas(level),'gold_runner_my_level.png');el('undo').onclick=()=>{if(mode!=='edit'||!undoStack.length)return;redoStack.push(clone(level));level=undoStack.pop();save();notify('Undo applied.')};el('redo').onclick=()=>{if(mode!=='edit'||!redoStack.length)return;undoStack.push(clone(level));level=redoStack.pop();save();notify('Redo applied.')};
