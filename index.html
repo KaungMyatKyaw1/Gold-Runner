@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GOLD RUNNER v20 — Offline Scanner</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gold Runner</title>
 <style>
 :root{color-scheme:dark;--bg:#0a0f1e;--panel:#141c32;--edge:#344264;--ink:#f2f3ff;--dim:#a5b2d4;--aqua:#6ce5dd;--pink:#fa82b4;--gold:#ffdc74}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1d2951 0,#080c17 70%);color:var(--ink);font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.wrap{max-width:1180px;margin:auto;padding:24px 18px 50px}.top{display:flex;align-items:start;justify-content:space-between;gap:15px;flex-wrap:wrap}h1{font-size:clamp(32px,5vw,54px);letter-spacing:.07em;margin:0;color:var(--aqua);text-shadow:3px 3px 0 #325c92}.tag{font-size:12px;color:var(--pink);letter-spacing:.17em;margin:7px 0}.intro{color:var(--dim);max-width:640px;line-height:1.55;font-size:13px}.pill{background:#273452;border:1px solid var(--edge);padding:12px 15px;border-radius:8px;font-size:12px}.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0 10px}button,.fakebtn{border:1px solid #566586;border-radius:7px;background:#1c2947;color:var(--ink);padding:10px 13px;font:700 12px ui-monospace,monospace;cursor:pointer;transition:background .12s}button:hover,.fakebtn:hover{background:#344467}button.active,.primary{background:#1b5e64;border-color:#79dcd9;color:#fff}button:disabled{opacity:.4;cursor:not-allowed}.stats{display:flex;gap:18px;align-items:center;flex-wrap:wrap;color:var(--gold);font-size:13px;min-height:33px}.game-frame{background:#080d18;border:3px solid #536594;border-radius:8px;padding:7px;box-shadow:0 14px 45px #0009;max-width:100%;position:relative}canvas#game{display:block;max-width:100%;height:auto;image-rendering:pixelated;background:#101726;touch-action:none;margin:auto}.message{min-height:32px;color:var(--aqua);padding:8px 0;font-size:13px}.lower{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(280px,1fr);gap:16px;margin-top:12px}.panel{background:#111a2e;border:1px solid #2b3a5d;border-radius:8px;padding:16px}.panel h2{margin:0 0 12px;font-size:15px;color:var(--aqua)}.panel p,.panel li{font-size:12px;line-height:1.6;color:var(--dim)}.palette{display:flex;gap:7px;flex-wrap:wrap}.swatch{display:flex;align-items:center;gap:7px;font-size:11px;padding:8px;border-radius:6px}.color{width:15px;height:15px;border:1px solid #fff6;display:inline-block}.smallbuttons{display:flex;gap:8px;flex-wrap:wrap;margin:11px 0}.hint{font-size:11px;color:#9fb0ce}.controls{display:grid;grid-template-columns:repeat(5,48px);gap:7px;justify-content:center;margin-top:12px}.controls button{font-size:18px;padding:12px 4px}.controls .wide{font-size:11px}.mobile{display:none}.warn{color:#ffcc87}.footer{color:#7082a7;font-size:11px;margin-top:22px}@media(max-width:740px){.lower{grid-template-columns:1fr}.mobile{display:block}.wrap{padding:12px 10px 40px}.panel{padding:12px}.toolbar button{flex:1 1 auto}}
 
@@ -111,6 +111,7 @@ html,body{height:100%;overscroll-behavior:none}body{background:#060c19}.wrap{hei
 .num-key strong{color:#ffe39c}
 @media(max-height:760px){.welcome-actions>button,.welcome-actions>.music-select{min-height:38px!important}}
 
+.fullscreen-return{position:fixed;top:12px;right:12px;z-index:20000;background:#1b5e64;border-color:#79dcd9;box-shadow:0 3px 14px #0008}.fullscreen-return[hidden]{display:none!important}
 .play-pause{display:none}.wrap.playing .play-pause{display:block;position:absolute;top:12px;right:12px;z-index:11;padding:10px 14px;background:#14273bed}@media(max-width:740px){.wrap.playing .play-pause{top:auto;bottom:12px;left:12px;right:auto}}
 .pause-overlay{position:absolute;inset:0;z-index:10;display:grid;place-items:center;background:#050c1bc9;text-align:center;line-height:1.5;padding:16px}.pause-overlay[hidden]{display:none!important}.pause-overlay strong{font-size:clamp(24px,5vw,48px);color:#6ce5dd;letter-spacing:.12em}.pause-overlay p{font-size:14px;color:#d0dcf3}.pause-overlay button{font-size:14px}.pause-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
 /* OCR scanner: photograph, corner calibration, automatically recognized playable level. */
@@ -423,7 +424,7 @@ ONNX MODEL ZOO LICENSE
    limitations under the License.
 
 </script>
-</head><body><div id="welcome" class="welcome" role="dialog" aria-modal="true" aria-label="GOLD RUNNER start screen"><div class="welcome-glow"></div><div class="welcome-card"><div class="welcome-logo">GOLD RUNNER<span>★</span></div><h1>GRAB THE GOLD.<br><em>BEAT THE GUARDS.</em></h1><p>Dig traps. Climb higher. Escape with every last shard.</p><div class="welcome-actions"><button id="welcomePlay" class="welcome-primary">▶ START GAME</button><button id="welcomeEditor" class="welcome-secondary">✎ LEVEL BUILDER</button><label for="track" class="music-select" role="button" tabindex="0">♫ LOAD YOUR MUSIC<input id="track" type="file" accept="audio/*" hidden></label><button id="welcomeSelect" class="welcome-secondary">▦ CHOOSE A LEVEL</button><button id="welcomeHelp" class="welcome-secondary">? HOW TO PLAY</button><button id="menuMusic" class="welcome-secondary" hidden>♫ PAUSE MUSIC</button><button id="resume" class="welcome-secondary" hidden>↪ RESUME</button></div><div id="stagePicker" class="stage-picker" hidden><button id="closeStagePicker" class="stage-picker-close" aria-label="Close level selection">✕ CLOSE</button><h2>CHOOSE A LEVEL</h2><div id="stagePickerGrid" class="stage-picker-grid"></div></div>
+</head><body><button id="returnFullscreen" class="fullscreen-return" type="button" hidden>⛶ RETURN TO FULL SCREEN</button><div id="welcome" class="welcome" role="dialog" aria-modal="true" aria-label="GOLD RUNNER start screen"><div class="welcome-glow"></div><div class="welcome-card"><div class="welcome-logo">GOLD RUNNER<span>★</span></div><h1>GRAB THE GOLD.<br><em>BEAT THE GUARDS.</em></h1><p>Dig traps. Climb higher. Escape with every last shard.</p><div class="welcome-actions"><button id="welcomePlay" class="welcome-primary">▶ START GAME</button><button id="welcomeEditor" class="welcome-secondary">✎ LEVEL BUILDER</button><label for="track" class="music-select" role="button" tabindex="0">♫ LOAD YOUR MUSIC<input id="track" type="file" accept="audio/*" hidden></label><button id="welcomeSelect" class="welcome-secondary">▦ CHOOSE A LEVEL</button><button id="welcomeHelp" class="welcome-secondary">? HOW TO PLAY</button><button id="menuMusic" class="welcome-secondary" hidden>♫ PAUSE MUSIC</button><button id="resume" class="welcome-secondary" hidden>↪ RESUME</button></div><div id="stagePicker" class="stage-picker" hidden><button id="closeStagePicker" class="stage-picker-close" aria-label="Close level selection">✕ CLOSE</button><h2>CHOOSE A LEVEL</h2><div id="stagePickerGrid" class="stage-picker-grid"></div></div>
 <div class="welcome-keymap"><span>← → MOVE</span><span>↑ CLIMB / ↓ DROP FROM ROPE</span><span>Q / E DIG</span><span>3 LIVES</span><span>SPACE PAUSE / RESUME</span><span>ESC MENU</span></div><div class="welcome-credit">Classic arcade action · Build & play your own stages</div></div></div><div id="intermission" class="intermission" hidden role="dialog" aria-label="Level introduction and victory animation"><div class="inter-card"><div class="inter-kicker" id="interKicker">LEVEL 01 / 10</div><div class="inter-title" id="interTitle">FIRST LOOP</div><div class="climb-scene" id="climbScene"><div class="climb-ladder"></div><div class="climb-runner"><div class="arm left"></div><div class="arm right"></div><div class="mouth"></div></div><div class="cheer-stars">✦ ✧ ★ ✧ ✦</div><div class="cheer-label">HOORAY!</div></div><div class="cry-scene" aria-label="Runner crying"><div class="cry-runner"><div class="cry-eyes"><i></i><i></i></div><div class="cry-mouth"></div><div class="cry-tear cry-tear-one"></div><div class="cry-tear cry-tear-two"></div><div class="cry-arm cry-arm-left"></div><div class="cry-arm cry-arm-right"></div><div class="cry-leg cry-leg-left"></div><div class="cry-leg cry-leg-right"></div></div></div><div class="inter-subtitle" id="interSubtitle"></div><div class="inter-countdown" id="interCountdown"></div></div></div>
 <div id="helpScreen" class="paper-help" role="dialog" aria-modal="true" aria-label="How to Play" hidden><div class="paper-help-card">
 <h2>HOW TO PLAY</h2>
@@ -555,8 +556,69 @@ function beginCampaign(which=0){
 }
 
 function fitBoard(){const box=el('stage'),frame=el('gameFrame');if(!box||!frame)return;const maxW=Math.max(200,box.clientWidth-(mode==='play'?0:16)),maxH=Math.max(120,box.clientHeight-(mode==='play'?0:15)),scale=Math.min(maxW/(W*S+8),maxH/(H*S+8));frame.style.width=Math.floor((W*S+8)*scale)+'px';}
-function enterFullscreen(){const root=document.documentElement;if(!document.fullscreenElement&&root.requestFullscreen)root.requestFullscreen().catch(()=>{});}
-function toggleFullscreen(){if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{});else enterFullscreen();}
+// Native file pickers may leave fullscreen. Remember only picker-related exits;
+// normal Escape and the fullscreen toggle must still leave fullscreen normally.
+let fullscreenPickerSession=null;
+function fullscreenElement(){return document.fullscreenElement||document.webkitFullscreenElement||null}
+function clearFullscreenRecovery(){fullscreenPickerSession=null;el('returnFullscreen').hidden=true}
+async function enterFullscreen(){
+ const root=document.documentElement,request=root.requestFullscreen||root.webkitRequestFullscreen;
+ if(fullscreenElement()){if(fullscreenPickerSession?.closed)clearFullscreenRecovery();return true}
+ if(!request)return false;
+ try{await request.call(root);const active=!!fullscreenElement();if(active&&fullscreenPickerSession?.closed)clearFullscreenRecovery();return active}catch{return false}
+}
+function toggleFullscreen(){
+ clearFullscreenRecovery();
+ const exit=document.exitFullscreen||document.webkitExitFullscreen;
+ if(fullscreenElement()&&exit){try{Promise.resolve(exit.call(document)).catch(()=>{})}catch{}}
+ else enterFullscreen();
+}
+function pickerInput(target){
+ if(!(target instanceof Element))return null;
+ const input=target.closest('input[type="file"]')||target.closest('label')?.control;
+ return input?.type==='file'?input:null;
+}
+function rememberPickerFullscreen(e){
+ const input=pickerInput(e.target);if(!input)return;
+ if(fullscreenPickerSession?.input===input&&!fullscreenPickerSession.closed)return;
+ const wanted=!!fullscreenElement()||!!fullscreenPickerSession?.closed;
+ fullscreenPickerSession=wanted?{input,closed:false,busy:false}:null;
+ el('returnFullscreen').hidden=true;
+}
+async function restorePickerFullscreen(){
+ const session=fullscreenPickerSession;if(!session?.closed||session.busy)return;
+ if(fullscreenElement()){clearFullscreenRecovery();return}
+ if(!(document.documentElement.requestFullscreen||document.documentElement.webkitRequestFullscreen)){clearFullscreenRecovery();return}
+ session.busy=true;el('returnFullscreen').hidden=false;
+ await enterFullscreen();
+ if(fullscreenPickerSession===session){session.busy=false;el('returnFullscreen').hidden=!!fullscreenElement()}
+}
+function finishFilePicker(input){
+ const session=fullscreenPickerSession;if(!session||session.input!==input)return;
+ session.closed=true;
+ // Allow a native picker exit reported just after the change/cancel event.
+ if(fullscreenElement())setTimeout(()=>{if(fullscreenPickerSession===session)restorePickerFullscreen()},200);
+ else restorePickerFullscreen();
+}
+document.addEventListener('pointerdown',rememberPickerFullscreen,true);
+document.addEventListener('click',rememberPickerFullscreen,true);
+for(const event of ['change','cancel'])document.addEventListener(event,e=>{
+ if(e.target instanceof HTMLInputElement&&e.target.type==='file')finishFilePicker(e.target);
+},true);
+// Older browsers may report only focus when a picker is cancelled.
+window.addEventListener('focus',()=>{
+ const session=fullscreenPickerSession;
+ if(session&&!session.closed)setTimeout(()=>{if(fullscreenPickerSession===session&&!session.closed)finishFilePicker(session.input)},200);
+});
+for(const event of ['fullscreenchange','webkitfullscreenchange'])document.addEventListener(event,()=>{
+ fitBoard();
+ if(fullscreenElement()){el('returnFullscreen').hidden=true;if(fullscreenPickerSession?.closed)clearFullscreenRecovery()}
+ else if(fullscreenPickerSession?.closed)restorePickerFullscreen();
+});
+el('returnFullscreen').onclick=restorePickerFullscreen;
+// A deliberate Escape cancels a pending recovery instead of trapping the user.
+window.addEventListener('keydown',e=>{if(e.key==='Escape')clearFullscreenRecovery()},true);
+
 function updatePauseControls(){
   const available=mode==='play'&&!won&&!dead&&!cinematic&&!overlayOpen&&el('helpScreen').hidden&&el('photoTrace').hidden;
   el('pause').disabled=!available;
@@ -1890,7 +1952,7 @@ CAMPAIGN_SPECS.forEach((spec,i)=>{
 el('resume').onclick=()=>{hideWelcome();enterFullscreen()};
 el('pause').onclick=togglePause;el('continuePlay').onclick=togglePause;el('pauseMenu').onclick=showWelcome;
 el('home').onclick=showWelcome;el('fullscreen').onclick=toggleFullscreen;
-window.addEventListener('resize',fitBoard);document.addEventListener('fullscreenchange',fitBoard);
+window.addEventListener('resize',fitBoard);
 el('play').onclick=playOrReset;el('edit').onclick=switchEdit;el('reset').onclick=()=>{if(mode==='play')start();else{level=sample();save();notify('Sample level restored.')}};el('example').onclick=()=>{setLevel(sample());notify('Sample level loaded. Press Play Level!')};el('blank').onclick=()=>{setLevel(wallLevel());notify('Blank level loaded. Draw a spawn and shards; a victory ladder is added automatically!')};el('letterGrid').onclick=letterGrid;el('guide').onclick=guide;el('cutouts').onclick=cutouts;el('export').onclick=()=>download(exportCanvas(level),'gold_runner_my_level.png');el('undo').onclick=()=>{if(mode!=='edit'||!undoStack.length)return;redoStack.push(clone(level));level=undoStack.pop();save();notify('Undo applied.')};el('redo').onclick=()=>{if(mode!=='edit'||!redoStack.length)return;undoStack.push(clone(level));level=redoStack.pop();save();notify('Redo applied.')};
 window.addEventListener('keydown',e=>{let k=e.key.length===1?e.key.toLowerCase():e.key;
 if(e.target instanceof Element&&e.target.closest('input,textarea,select,[contenteditable="true"]'))return;
